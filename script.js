@@ -97,6 +97,7 @@ function makePageForEpisodes(episodeList) {
   footer.appendChild(footP);
   footA.href = "https://www.tvmaze.com/";
   footA.innerHTML = `https://www.tvmaze.com/`;
+  footA.target = "_blank";
 
   //print content
 
