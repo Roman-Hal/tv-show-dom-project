@@ -1,96 +1,31 @@
 //You can edit ALL of the code here
+const bodyTag = document.getElementsByTagName("body");
+const header = document.getElementById('header');
+var list;
+const form = document.getElementById('form');
+const search = document.getElementById('search');
+const rootElem = document.getElementById("root");
+let searchTerm = '';
+var counting;
+
 function setup() {
   const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-}
+  //makePageForEpisodes(allEpisodes);
 
-function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
-  //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
- 
+  search.addEventListener('input', e => {
+    // saving the input value
+    searchTerm = e.target.value;
 
-  episodeList.forEach(element => {
-    const headWrap = document.createElement('div');
-    const wrap = document.createElement('div');
-    const header = document.createElement('h3');
-    const image = document.createElement('img');
-    const aboutWrap = document.createElement('div');
-    const about = document.createElement('p');
-    const link = document.createElement('a');
+    // re-displaying episodes based on the search
+    makePageForEpisodes(allEpisodes);
+    //counting = allEpisodes.length;
+});
+  makePageForEpisodes(allEpisodes); 
 
-        header.innerHTML = `${element.name} - S${String(element.season).padStart(2, '0')}E${String(element.number).padStart(2, '0')}`;
-        image.src = element.image.medium;
-        about.innerHTML = `${element.summary}`;
-
-        aboutWrap.appendChild(about);
-        about.appendChild(link);
-        headWrap.appendChild(header);
-        wrap.appendChild(headWrap);
-        wrap.appendChild(image);
-        wrap.appendChild(aboutWrap);
-        rootElem.appendChild(wrap);
-
-        //setting up the link 
-        link.href = element.url;
-        link.target = '_blank';
-        link.innerHTML = `Episode Link`;
-
-        //style
-
-        //link
-
-        link.style.color = "#87240E";
-
-        //head
-
-        header.style.color = 'black';
-
-        //head wrapper
-
-        headWrap.style.border = "1px solid black";
-        headWrap.style.maxWidth = "100%";
-        headWrap.style.borderRadius = '20px';
-        headWrap.style.margin = "0 0 10px 0";
-        headWrap.style.height = '80px';
-        headWrap.style.backgroundColor = "#AEAEAE";
-
-        //each div wrapper
-
-        wrap.style.minWidth = "250px";
-        wrap.style.maxWidth = '220px';
-        wrap.style.minHeight = '30%';
-        wrap.style.margin = "5px";
-        wrap.style.textAlign = "center";
-        wrap.style.border = "1px solid grey";
-        wrap.style.borderRadius = '25px';
-
-        wrap.style.flex = '1';
-        wrap.style.backgroundColor = "lightgrey";
-        
-        //about wrapper
-
-        aboutWrap.style.maxWidth = '100%';
-        aboutWrap.style.textAlign = 'center';
-        aboutWrap.style.margin = "20px 15px 30px 15px";
-        
-        //main style
-        
-        rootElem.style.display = 'flex';
-        rootElem.style.flexFlow = 'row wrap';
-        rootElem.style.marginLeft = "10px";
-
-        //image style
-
-        image.style.maxWidth = "100%";
-        image.style.borderRadius = '10px';
-  });
-
-  //setting up footer and content of the footer
-
-  const footer = document.createElement('footer');
+  const footer = document.getElementById('footer');
   const footP = document.createElement('p');
   const footA = document.createElement('a');
-  footer.setAttribute("id", "footer");
+  //footer.setAttribute("id", "footer");
   footP.setAttribute("id", "footerP");
   footA.setAttribute("id", "footLink");
   rootElem.after(footer);
@@ -102,12 +37,130 @@ function makePageForEpisodes(episodeList) {
   //print content
 
   footP.innerHTML = `This content is from: ` + footA.outerHTML;
-  
-  
-  
 
 
+  
+};
 
-}
+function makePageForEpisodes(episodeList) {
+  //reset counter
+  var count = 0;
+  const rootElem = document.getElementById("root");
+  //reset the list
+  rootElem.innerHTML = '';
+  var counter = document.getElementById('counter');
+  const counterWrap = document.createElement('div');
+  //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+
+  header.style.backgroundColor = 'grey';
+  header.style.maxHeight = '40px';
+  const ul = document.createElement('ul');
+
+  episodeList.filter((item) => {
+    return (
+      item.name.toLowerCase().includes(searchTerm) ||
+      item.summary.toLowerCase().includes(searchTerm)
+    );
+  }).forEach(element => {
+      count ++;
+    
+    const wrap = document.createElement('li');
+    const headWrap = document.createElement('div');
+    const heading = document.createElement('h3');
+    const image = document.createElement('img');
+    const aboutWrap = document.createElement('div');
+    const about = document.createElement('p');
+    const link = document.createElement('a');
+    
+    
+        heading.innerHTML = `${element.name} - S${String(element.season).padStart(2, '0')}E${String(element.number).padStart(2, '0')}`;
+        image.src = element.image.medium;
+        about.innerHTML = `${element.summary}`;
+
+        aboutWrap.appendChild(about);
+        about.appendChild(link);
+        headWrap.appendChild(heading);
+        wrap.appendChild(headWrap);
+        wrap.appendChild(image);
+        wrap.appendChild(aboutWrap);
+
+        ul.appendChild(wrap);
+        header.appendChild(counter);
+        counting = episodeList.length;
+        counter.innerHTML = `filtered ${count} / ${episodeList.length} total`;
+
+        //setting up the link 
+
+        link.href = element.url;
+        link.target = '_blank';
+        link.innerHTML = `Episode Link`;
+        
+        //style
+
+        //link
+
+        link.style.color = '#87240E';
+
+        //head
+
+        heading.style.color = 'black';
+
+        //head wrapper
+
+        headWrap.style.border = '1px solid black';
+        headWrap.style.maxWidth = "100%";
+        headWrap.style.borderRadius = '20px';
+        headWrap.style.margin = "0 0 10px 0";
+        headWrap.style.height = '80px';
+        headWrap.style.backgroundColor = '#AEAEAE';
+
+        //each div wrapper
+
+        wrap.style.listStyleType = 'none';
+        wrap.style.minWidth = '250px';
+        wrap.style.maxWidth = '220px';
+        wrap.style.minHeight = '30%';
+        wrap.style.margin = '5px';
+        wrap.style.textAlign = 'center';
+        wrap.style.border = '1px solid grey';
+        wrap.style.borderRadius = '25px';
+
+        wrap.style.flex = '1';
+        wrap.style.backgroundColor = 'lightgrey';
+        
+        //about wrapper
+
+        aboutWrap.style.maxWidth = '100%';
+        aboutWrap.style.textAlign = 'center';
+        aboutWrap.style.margin = '20px 15px 30px 15px';
+        
+        //main style
+        
+        ul.style.display = 'flex';
+        ul.style.flexFlow = 'row wrap';
+        ul.style.marginLeft = '10px';
+
+        //image style
+
+        image.style.maxWidth = '100%';
+        image.style.borderRadius = '10px';
+        header.appendChild(counterWrap);
+        
+
+        counter.style.color = 'white';
+        counterWrap.appendChild(counter);
+        if(ul===null) {
+          count = 0;
+        }
+        console.log(counting);    
+  });
+  
+        rootElem.appendChild(ul);
+        header.style.display = 'flex';
+        header.style.textAlign = 'center';
+        search.style.display = 'row wrap';
+        search.style.maxWidth = '200px';
+        counterWrap.style.display = 'row wrap';
+};
 
 window.onload = setup;
