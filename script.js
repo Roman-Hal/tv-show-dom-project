@@ -1,53 +1,47 @@
 //You can edit ALL of the code here
-const bodyTag = document.getElementsByTagName("body");
+const bodyTag = document.getElementsByTagName('body');
 const header = document.getElementById('header');
-var list;
-const form = document.getElementById('form');
 const search = document.getElementById('search');
-const rootElem = document.getElementById("root");
+const rootElem = document.getElementById('root');
 let searchTerm = '';
-var counting;
 
 function setup() {
   const allEpisodes = getAllEpisodes();
-  //makePageForEpisodes(allEpisodes);
 
+  //search setting
   search.addEventListener('input', e => {
     // saving the input value
     searchTerm = e.target.value;
 
     // re-displaying episodes based on the search
     makePageForEpisodes(allEpisodes);
-    //counting = allEpisodes.length;
-});
+  });
   makePageForEpisodes(allEpisodes); 
 
   const footer = document.getElementById('footer');
   const footP = document.createElement('p');
   const footA = document.createElement('a');
   //footer.setAttribute("id", "footer");
-  footP.setAttribute("id", "footerP");
-  footA.setAttribute("id", "footLink");
+  footP.setAttribute('id', 'footerP');
+  footA.setAttribute('id', 'footLink');
   rootElem.after(footer);
   footer.appendChild(footP);
-  footA.href = "https://www.tvmaze.com/";
+  footA.href = 'https://www.tvmaze.com/';
   footA.innerHTML = `https://www.tvmaze.com/`;
-  footA.target = "_blank";
+  footA.target = '_blank';
 
   //print content
-
   footP.innerHTML = `This content is from: ` + footA.outerHTML;
-
-
-  
 };
 
 function makePageForEpisodes(episodeList) {
   //reset counter
   var count = 0;
-  const rootElem = document.getElementById("root");
+
+  //const rootElem = document.getElementById('root');
   //reset the list
   rootElem.innerHTML = '';
+
   var counter = document.getElementById('counter');
   const counterWrap = document.createElement('div');
   //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
@@ -62,7 +56,7 @@ function makePageForEpisodes(episodeList) {
       item.summary.toLowerCase().includes(searchTerm)
     );
   }).forEach(element => {
-      count ++;
+    count ++;
     
     const wrap = document.createElement('li');
     const headWrap = document.createElement('div');
@@ -72,95 +66,87 @@ function makePageForEpisodes(episodeList) {
     const about = document.createElement('p');
     const link = document.createElement('a');
     
+    heading.innerHTML = `${element.name} - S${String(element.season).padStart(2, '0')}E${String(element.number).padStart(2, '0')}`;
+    image.src = element.image.medium;
+    about.innerHTML = `${element.summary}`;
+
+    aboutWrap.appendChild(about);
+    about.appendChild(link);
+    headWrap.appendChild(heading);
+    wrap.appendChild(headWrap);
+    wrap.appendChild(image);
+    wrap.appendChild(aboutWrap);
+    ul.appendChild(wrap);
+    header.appendChild(counter);
+    header.appendChild(counterWrap);
+    counterWrap.appendChild(counter);
+        
+    //setting up the link 
+    link.href = element.url;
+    link.target = '_blank';
+    link.innerHTML = `Episode Link`;
+        
+    //style
+
+    //link
+    link.style.color = '#87240E';
+
+    //head
+    heading.style.color = 'black';
+
+    //head wrapper
+    headWrap.style.border = '1px solid black';
+    headWrap.style.maxWidth = '100%';
+    headWrap.style.borderRadius = '20px';
+    headWrap.style.margin = '0 0 10px 0';
+    headWrap.style.height = '80px';
+    headWrap.style.backgroundColor = '#AEAEAE';
+
+    //each div wrapper
+    wrap.style.listStyleType = 'none';
+    wrap.style.minWidth = '250px';
+    wrap.style.maxWidth = '220px';
+    wrap.style.minHeight = '30%';
+    wrap.style.margin = '5px';
+    wrap.style.textAlign = 'center';
+    wrap.style.border = '1px solid grey';
+    wrap.style.borderRadius = '25px';
+    wrap.style.flex = '1';
+    wrap.style.backgroundColor = 'lightgrey';
+        
+    //about wrapper
+    aboutWrap.style.maxWidth = '100%';
+    aboutWrap.style.textAlign = 'center';
+    aboutWrap.style.margin = '20px 15px 30px 15px';
+        
+    //main style   
+    ul.style.display = 'flex';
+    ul.style.flexFlow = 'row wrap';
+    ul.style.marginLeft = '10px';
+
+    //image style
+    image.style.maxWidth = '100%';
+    image.style.borderRadius = '10px';
+       
+    //counter filter style
+    counter.style.color = 'white';
     
-        heading.innerHTML = `${element.name} - S${String(element.season).padStart(2, '0')}E${String(element.number).padStart(2, '0')}`;
-        image.src = element.image.medium;
-        about.innerHTML = `${element.summary}`;
-
-        aboutWrap.appendChild(about);
-        about.appendChild(link);
-        headWrap.appendChild(heading);
-        wrap.appendChild(headWrap);
-        wrap.appendChild(image);
-        wrap.appendChild(aboutWrap);
-
-        ul.appendChild(wrap);
-        header.appendChild(counter);
-        counting = episodeList.length;
-        counter.innerHTML = `filtered ${count} / ${episodeList.length} total`;
-
-        //setting up the link 
-
-        link.href = element.url;
-        link.target = '_blank';
-        link.innerHTML = `Episode Link`;
-        
-        //style
-
-        //link
-
-        link.style.color = '#87240E';
-
-        //head
-
-        heading.style.color = 'black';
-
-        //head wrapper
-
-        headWrap.style.border = '1px solid black';
-        headWrap.style.maxWidth = "100%";
-        headWrap.style.borderRadius = '20px';
-        headWrap.style.margin = "0 0 10px 0";
-        headWrap.style.height = '80px';
-        headWrap.style.backgroundColor = '#AEAEAE';
-
-        //each div wrapper
-
-        wrap.style.listStyleType = 'none';
-        wrap.style.minWidth = '250px';
-        wrap.style.maxWidth = '220px';
-        wrap.style.minHeight = '30%';
-        wrap.style.margin = '5px';
-        wrap.style.textAlign = 'center';
-        wrap.style.border = '1px solid grey';
-        wrap.style.borderRadius = '25px';
-
-        wrap.style.flex = '1';
-        wrap.style.backgroundColor = 'lightgrey';
-        
-        //about wrapper
-
-        aboutWrap.style.maxWidth = '100%';
-        aboutWrap.style.textAlign = 'center';
-        aboutWrap.style.margin = '20px 15px 30px 15px';
-        
-        //main style
-        
-        ul.style.display = 'flex';
-        ul.style.flexFlow = 'row wrap';
-        ul.style.marginLeft = '10px';
-
-        //image style
-
-        image.style.maxWidth = '100%';
-        image.style.borderRadius = '10px';
-        header.appendChild(counterWrap);
-        
-
-        counter.style.color = 'white';
-        counterWrap.appendChild(counter);
-        if(ul===null) {
-          count = 0;
-        }
-        console.log(counting);    
   });
+
+  counter.innerHTML = `filtered ${count} / ${episodeList.length} total`;
+  //append to the main div
+  rootElem.appendChild(ul);
   
-        rootElem.appendChild(ul);
-        header.style.display = 'flex';
-        header.style.textAlign = 'center';
-        search.style.display = 'row wrap';
-        search.style.maxWidth = '200px';
-        counterWrap.style.display = 'row wrap';
+  //header style
+  header.style.display = 'flex';
+  header.style.textAlign = 'center';
+
+  //search input style
+  search.style.display = 'row wrap';
+  search.style.maxWidth = '200px';
+
+  //counter style
+  counterWrap.style.display = 'row wrap';
 };
 
 window.onload = setup;
