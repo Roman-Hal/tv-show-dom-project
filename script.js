@@ -10,9 +10,22 @@ let listSearch = '';
 search.style.margin = '0px 15px 0px 15px';
 search.style.fontSize = '20px';
 
+const url = 'https://api.tvmaze.com/shows/527/episodes';
 
-function setup() {
-  const allEpisodes = getAllEpisodes();
+//getAllEpisodes1();
+//const allEpisodes;
+var getAllEpisodes2;
+
+fetch(url)
+.then(response => response.json())
+.then(data => getAllEpisodes2 = data)
+.then (function setup() {
+  
+  const allEpisodes = getAllEpisodes2;
+
+  //const allEpisodes = getAllEpisodes(); //connection to episodes.js
+
+  //console.log(allEpisodes); //testing
 
   //search setting
   search.addEventListener('input', e => {
@@ -61,7 +74,12 @@ function setup() {
 
   //print content
   footP.innerHTML = `This content is from: ` + footA.outerHTML;
-};
+})
+.catch(function(error) {
+
+});
+
+
 
 function makePageForEpisodes(episodeList) {
   //reset counter
@@ -191,4 +209,5 @@ function makePageForEpisodes(episodeList) {
   //counterWrap.style.display = 'row wrap';
 };
 
-window.onload = setup;
+  window.onload;
+//window.onload = fetch;

@@ -1,5 +1,6 @@
 #root {
   color: red;
+  grid-area: rOot;
 }
 
 label {
@@ -32,10 +33,11 @@ body {
   background-color: grey;
 }
 
-header {
+#header {
   height: 100%;
   margin-bottom: 20px;
   width: 100%;
+  grid-area: heaDer;
 }
 
 #counterWrap {
@@ -43,15 +45,38 @@ header {
 }
 
 #main {
-  display: flex;
+  display: grid;
+  grid-template-areas:'heaDer'
+  'rOot'
+  'fOoter'; 
+  /*display: flex;*/
   flex-wrap: wrap;
 }
 
-footer {
+#footer {
+  grid-area: fOoter;
   display: inline-block;
 }
 
 #footerP {
   display: inline-block;
 }
+
+/*li:hover {
+  background-color: orange;
+  border: 2px solid yellow;
+  cursor: pointer;
+}
+
+li:hover p {
+  font-size: 20px;
+}
+
+li:hover h3 {
+  font-size: 20px;
+}
+
+li:hover div {
+  background-color: orange;
+}*/
 
