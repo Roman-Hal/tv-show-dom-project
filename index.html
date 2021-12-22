@@ -9,37 +9,45 @@
   </head>
 
   <body>
-    <div id = "main">
+    <div id="main">
       <header id="header">
+        <div id="selectWrap1">
+          <label for="shows">Choose show:</label>
+          <select name="shows" id="shows">
+            <!--<option value="" selected="selected">ALL SERIES</option>-->
+          </select>
+        </div>
         <div id="selectWrap">
           <label for="series">Choose series:</label>
           <select name="series" id="series">
-            <option value="" selected="selected">ALL SERIES</option> 
+            <option value="" selected="selected">ALL SERIES</option>
           </select>
         </div>
-        <div id = "inputWrap">
-          <form id = "form">
-            <input  
-                autocomplete="off"
-                type="text"
-                id="search"
-                placeholder="Search"
-                class="search"
-              />
-            </form>
-          </div>
+        <div id="inputWrap">
+          <form id="form">
+            <input
+              autocomplete="off"
+              type="text"
+              id="search"
+              placeholder="Search"
+              class="search"
+            />
+          </form>
+        </div>
         <p id="counter"></p>
       </header>
       <div id="root">
+        <h4 id="sum">summary</h4>
       </div>
     </div>
-      <footer id="footer"></footer>
-    
+    <footer id="footer"></footer>
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
 
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
+
+    <script src="shows.js"></script>
   </body>
 </html>
